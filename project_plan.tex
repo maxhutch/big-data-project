@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{tikz}
+\usepackage{subfig}
+\usepackage{verbatim}
+\usepackage[all]{xy}
+\usetikzlibrary{positioning}
+
+\newcommand{\set}[1] {{\left\{#1\right\}}}
+
+
+\begin{document}
+
+
+\title{Data Intensive Computing Project Plan}
+\author{Max Hutchinson}
+\date{\today}
+\maketitle
+
+This project aims to provide insights to the question ``are data intensive computing systems effective tools for computational scientists?''  For the purposes of this project, a ``computational scientist'' is represented by one who is trying to solve a particular problem: the enumeration of random tilings (i.e. me).  ``Efficiency'' will be considered on a number of fronts: memory efficiency, time efficiency, disk efficiency, and programmer efficiency.  Each of these evaluations will consider three scales: development (workstation), production (cluster), and heroics (largest possible system).
+
+The problem of random tiling enumeration is important to the understanding of quasicrystals~\cite{Shechtman1984,Levine1984}.  From an algorithms point of view, it is a breadth first operation~\cite{Dest01} on a DAG with a convenient layering property: all paths between two nodes have the same length.  This operation is difficult for three reasons: 1) the DAG grows super-exponentially with the problem size, 2) the DAG is only weakly local, and 3) the memory requirements for the data on the DAG edges is dynamic.
+
+The experiment will consist of implementing a random tiling enumerator on a variety of data intensive computing systems.  The first implementation, which is already being used in production, is based on simple C with POSIX threads.  The second implementation will be in Hadoop, a popular implementation of MapReduce.  The third will be in GraphLab and, capabilities permitting, GraphChi.  These three frameworks represent very different philosophies on facilitating efficient code.  For example, MapReduce is highly restrictive but highly automatic, while POSIX threads is highly expressive but handles almost nothing automatically.  GraphLab tries to carve out a middle ground, being more expressive than MapReduce and more automatic than POSIX threads.  While it seems likely that POSIX threads will outperform GraphLab and MapReduce at development scale, it is not clear which will ultimately scale most effectively.
+
+Observing the affects of these design philosophies on this particular scientific workload will go a long way towards evaluating the effectiveness of data intensive computing systems, such as MapReduce and GraphLab, on problems which have been historically handled explicitly in a minimalistic environment such as POSIX threads.  Analysis will focus on systems issues, ``How well does the framework take advantage of the hardware in the context of the task?'', over programmatic issues, ``How well does the framework allow for the expression of the problem?'', though both will be considered.  
+
+\bibliographystyle{plain}
+\bibliography{../../../writings/bib/library}
+
+\end{document}
