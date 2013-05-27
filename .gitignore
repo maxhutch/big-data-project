@@ -30,3 +30,11 @@
 *.vrb
 *.xdy
 *.tdo
+
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.swp
