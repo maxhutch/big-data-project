@@ -203,13 +203,14 @@ public class Tiling {
 
   /* Get double the coordinates of the face */
   private static int[] face(int[] path1, int[] path2){
-    int[] result = new int[3];
+    int[] result = {0,0,0};
     for (int i = 0; i < path1.length -1; i++){
       if (path1[i] == path2[i]){
         result[path1[i]] += 2;
       } else if (path1[i] == path2[i+1] && path1[i+1] == path2[i]){
         result[path1[i]] += 1;
         result[path1[i+1]] += 1;
+        result[1] *= -1;
         return result;
       } else {
         return result;
@@ -221,15 +222,15 @@ public class Tiling {
   /* Partial ording on faces */
   public static boolean compare(int[] face1, int[] face2){
     if (face1[2] != face2[2]) return face1[2] > face2[2];
-    else if (face1[1] != face2[1]) return face1[1] < face2[1];
-    else if (face1[0]%2 == 0) return face1[0] > face2[0];
-    else return face1[0] < face2[0]; 
+    else if (face1[0] != face2[0]) return face1[0] < face2[0];
+    else if (face1[2]%2 == 1) return face1[1] > face2[1];
+    else return face1[1] < face2[1]; 
   }
  
   public static class Map extends Mapper<Edge, BigList, Edge, BigList> {
  
     public void map(Edge inEdge, BigList inVals, Context output) throws IOException, InterruptedException {
-      if (output.getConfiguration().get("bootstrap") != null){
+      if (output.getConfiguration().get("mode").equals("bootstrap")){
         System.out.format("Bootstrapping %n");
         int a,b,c,d,n;
         a = b = c = 2; d = 2;
@@ -266,7 +267,7 @@ public class Tiling {
 
       /* loop over possible swaps */
       for (int i = 0; i < path.length-1; i++){
-        if (path[i+1] < path[i]){ // if a swap...
+        if (path[i+1] > path[i]){ // if a swap...
           int[] newPath = new int[path.length];
           System.arraycopy(path, 0, newPath, 0, path.length);
           /* make the new path */
@@ -279,9 +280,9 @@ public class Tiling {
 
           /* Slide the descents list down if needed */
           BigList newVals = new BigList(inVals);
-          if (compare(face_new, face_old)){
+          if (compare(face_old, face_new)){
             newVals.data.add(0, BigInteger.valueOf(0));
-            newVals.data.remove(newVals.data.size());
+            newVals.data.remove(newVals.data.size()-1);
           }
 
           /* construct the new key */
@@ -315,12 +316,22 @@ public class Tiling {
     Configuration conf = new Configuration();
     String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
     boolean bootstrap = false;
-    if (otherArgs.length < 1 || otherArgs.length > 2) {
-      System.err.println("Usage: tiling [<indir>] <outdir>");
+    boolean cont = false;
+    boolean out = false; 
+    if (otherArgs.length != 3) {
+      System.err.println("Usage: tiling <mode> <indir> <outdir>");
       System.exit(2);
-    } else if (otherArgs.length == 1) {
+    }
+   if (otherArgs[0].equals("bootstrap")) {
       bootstrap = true;
-      conf.set("bootstrap", "true"); 
+      conf.set("mode", "bootstrap"); 
+      System.out.format("Bootstrapping %n");
+    } else if (otherArgs[0].equals("continue")){
+      cont = true;
+      conf.set("mode", "continue");
+    } else if (otherArgs[0].equals("output")){
+      out = true;
+      conf.set("mode", "output");
     }
 
     /* setup conf and job */
@@ -341,15 +352,16 @@ public class Tiling {
     /* Setup paths, dependent on bootstrap */
     if (bootstrap) {
       job.setInputFormatClass(NullInputFormat.class);
-//      job.setOutputFormatClass(SequenceFileOutputFormat.class);
-      FileInputFormat.addInputPath(job, new Path("test"));
-      FileOutputFormat.setOutputPath(job, new Path(otherArgs[0]));
-      conf.set("bootstrap", "true");
-      System.out.format("Bootstrapping %n");
-    } else {
-      FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
-      FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
+      job.setOutputFormatClass(SequenceFileOutputFormat.class);
+    } else if (cont) {
+      job.setInputFormatClass(SequenceFileInputFormat.class);
+      job.setOutputFormatClass(SequenceFileOutputFormat.class);
+    } else if (out){
+      job.setInputFormatClass(SequenceFileInputFormat.class);
+      job.setOutputFormatClass(TextOutputFormat.class);
     }
+    FileInputFormat.addInputPath(job, new Path(otherArgs[1]));
+    FileOutputFormat.setOutputPath(job, new Path(otherArgs[2]));
 
     /* Get out */
     System.exit(job.waitForCompletion(true) ? 0 : 1);
