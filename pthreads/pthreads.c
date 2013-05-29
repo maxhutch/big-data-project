@@ -24,9 +24,9 @@
 #define NUM_THREADS 1
 #define HASH_SIZE 134217728 /* Size of the Hash Table, must be power of 2 */
 #define HASH_MOD 0x7FFFFFFl /* Mask for the hash table, should be hex(HASH_SIZE-1) */
-#define MAX_CHILD 12
-#define MAX_DESC 100
-#define MAX_TOT 18
+#define MAX_CHILD 10
+#define MAX_DESC 5
+#define MAX_TOT 15
 
 //#define FOR_DISPLAY
 
@@ -143,7 +143,7 @@ int main(int argc, char* argv[]){
   for (i = 0; i < MAX_TOT; i++)
     powers[i] = pow(3,i);
 
-  mpz_t *ans = W(6, 6, 6, 6);
+  mpz_t *ans = W(5,5,5,5);
   
   /* Compute area and number of tiles analytically */
   double area = (K + L/sqrt(2.) + N/sqrt(2.))*(M + L/sqrt(2.) + N/sqrt(2.)) - L*L/2. - N*N/2.;
@@ -229,7 +229,7 @@ mpz_t* W(int a_in, int b_in, int c_in, int d_in){
     for (j = 0; j < root->child_counter; j++) {
       mpz_add(ajs[i], root->vals[j][i], ajs[i]);
     }
-    gmp_printf("%d\t%d\t%d\t%d\t%Zd\t",K, L, M, i, ajs[i]);
+    gmp_printf("%d\t%d\t%d\t%d\t%Zd\n",K, L, M, i, ajs[i]);
   } 
   printf("\n"); 
   
