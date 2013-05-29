@@ -10,5 +10,5 @@ WordCount: WordCount.java
 	jar cvf WordCount.jar Word*.class
 
 run: 
-	rm -rf tmp
-	~/src/hadoop-1.1.2/bin/hadoop jar Tiling.jar Tiling tmp
+	rm -rf tmp*
+	~/src/hadoop-1.1.2/bin/hadoop jar Tiling.jar Tiling bootstrap test tmp0

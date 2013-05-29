@@ -38,8 +38,7 @@ class Edge implements WritableComparable {
   int[] dst;
   int n;
 
-  public Edge(){
-  }
+  public Edge(){};
 
   public Edge(int[] src, int[] dst){
     this.n = src.length;
@@ -48,13 +47,14 @@ class Edge implements WritableComparable {
   }
 
   public int compareTo(Object input){
-    // TODO: Handle case when input is not of type Edge
     Edge edge2 = (Edge)input;
+    // first compare by dst
     for (int i = 0; i < this.n; i++)
       if (this.dst[i] < edge2.dst[i])
         return -1;
       else if (this.dst[i] > edge2.dst[i])
         return 1;
+    // then src
     for (int i = 0; i < this.n; i++)
       if (this.src[i] < edge2.src[i])
         return -1;
@@ -74,9 +74,7 @@ class Edge implements WritableComparable {
 
   public void readFields(DataInput in) throws IOException {
     n = in.readInt();
-    src = new int[n];
-    dst = new int[n];
-
+    src = new int[n]; dst = new int[n];
     for (int i = 0; i < n; i++)
       src[i] = in.readInt();
     for (int i = 0; i < n; i++)
@@ -85,13 +83,13 @@ class Edge implements WritableComparable {
   }
 
   public String toString(){
-    String ans = "{[";
+    String ans = "{(";
     for (int i = 0; i < n; i++)
       ans = ans + Integer.toString(src[i]) + ",";
-    ans = ans + "] -> [";
+    ans = ans + ") -> (";
     for (int i = 0; i < n; i++)
       ans = ans + Integer.toString(dst[i]) + ",";
-    ans = ans + "]}";
+    ans = ans + ")}";
     return ans; 
   }
 
@@ -113,9 +111,7 @@ class BigList implements Writable {
       data.add(i,list.data.get(i));
   }
 
-  public BigList(){
-    new BigList(1);
-  }
+  public BigList(){new BigList(1);}
 
   public void write(DataOutput out) throws IOException {
     out.writeInt(data.size());
@@ -170,13 +166,13 @@ class NullRecordReader extends RecordReader<Edge,BigList> {
   }
 
   public boolean nextKeyValue() throws IOException {
-
-    if (!lineReader.nextKeyValue()) {
-      return false;
-    }
-
-    key = new Edge();
-    val = new BigList(2);
+    if (!lineReader.nextKeyValue()) return false; 
+    Text line = lineReader.getCurrentValue();
+    String[] strs = line.toString().split(" ");
+    int[] vals = new int[4];
+    for (int i = 0; i < 4; i++)
+      vals[i] = Integer.parseInt(strs[i]); 
+    key = new Edge(vals, vals); val = new BigList(1);
 
     return true;
   }
@@ -232,9 +228,10 @@ public class Tiling {
     public void map(Edge inEdge, BigList inVals, Context output) throws IOException, InterruptedException {
       if (output.getConfiguration().get("mode").equals("bootstrap")){
         System.out.format("Bootstrapping %n");
+        System.out.format("[%d %d %d %d] %n", inEdge.src[0], inEdge.src[1], inEdge.src[2], inEdge.src[3]);
         int a,b,c,d,n;
-        a = b = c = 2; d = 2;
-        n = a+b+c;
+        a = inEdge.src[0]; b = inEdge.src[1]; c = inEdge.src[2];
+        d = inEdge.src[3]; n = a+b+c;
 
         int[] path0 = new int[n];
         int[] path1 = new int[n];
