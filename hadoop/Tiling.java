@@ -315,7 +315,7 @@ public class Tiling {
     boolean bootstrap = false;
     boolean cont = false;
     boolean out = false; 
-    if (otherArgs.length != 3) {
+    if (otherArgs.length != 4) {
       System.err.println("Usage: tiling <mode> <indir> <outdir>");
       System.exit(2);
     }
@@ -330,6 +330,7 @@ public class Tiling {
       out = true;
       conf.set("mode", "output");
     }
+    int num_tasks = Integer.parseInt(otherArgs[3]);
 
     /* setup conf and job */
     Job job = new Job(conf, "tiling");
@@ -346,6 +347,7 @@ public class Tiling {
     job.setOutputKeyClass(Edge.class);
     job.setOutputValueClass(BigList.class);
 
+    //job.setNumReduceTasks(num_tasks * 2);
     /* Setup paths, dependent on bootstrap */
     if (bootstrap) {
       job.setInputFormatClass(NullInputFormat.class);
@@ -356,6 +358,7 @@ public class Tiling {
     } else if (out){
       job.setInputFormatClass(SequenceFileInputFormat.class);
       job.setOutputFormatClass(TextOutputFormat.class);
+      job.setNumReduceTasks(1);
     }
     FileInputFormat.addInputPath(job, new Path(otherArgs[1]));
     FileOutputFormat.setOutputPath(job, new Path(otherArgs[2]));
