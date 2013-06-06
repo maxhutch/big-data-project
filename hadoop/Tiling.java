@@ -34,13 +34,13 @@ import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.RecordReader;
 
 class Edge implements WritableComparable {
-  int[] src;
-  int[] dst;
+  byte[] src;
+  byte[] dst;
   int n;
 
   public Edge(){};
 
-  public Edge(int[] src, int[] dst){
+  public Edge(byte[] src, byte[] dst){
     this.n = src.length;
     this.src = src;
     this.dst = dst;
@@ -65,30 +65,26 @@ class Edge implements WritableComparable {
 
   public void write(DataOutput out) throws IOException {
     out.writeInt(n);
-    for (int i = 0; i < n; i++)
-      out.writeInt(src[i]);
-    for (int i = 0; i < n; i++)
-      out.writeInt(dst[i]);
+    out.write(src);
+    out.write(dst);
     return;
   }
 
   public void readFields(DataInput in) throws IOException {
     n = in.readInt();
-    src = new int[n]; dst = new int[n];
-    for (int i = 0; i < n; i++)
-      src[i] = in.readInt();
-    for (int i = 0; i < n; i++)
-      dst[i] = in.readInt();
+    src = new byte[n]; dst = new byte[n];
+    in.readFully(src, 0, n);
+    in.readFully(dst, 0, n);
     return;
   }
 
   public String toString(){
     String ans = "{(";
     for (int i = 0; i < n; i++)
-      ans = ans + Integer.toString(src[i]) + ",";
+      ans = ans + Integer.toString((int)src[i]) + ",";
     ans = ans + ") -> (";
     for (int i = 0; i < n; i++)
-      ans = ans + Integer.toString(dst[i]) + ",";
+      ans = ans + Integer.toString((int)dst[i]) + ",";
     ans = ans + ")}";
     return ans; 
   }
@@ -114,17 +110,27 @@ class BigList implements Writable {
   public BigList(){new BigList(1);}
 
   public void write(DataOutput out) throws IOException {
+    byte[] bytes;
     out.writeInt(data.size());
-    for (int i = 0; i < data.size(); i++)
-      out.writeBytes(data.get(i).toString()+"\n");
+    for (int i = 0; i < data.size(); i++){
+      bytes = data.get(i).toByteArray();
+      out.writeShort((short) bytes.length);
+      out.write(bytes);
+    }
     return;
   }
 
   public void readFields(DataInput in) throws IOException {
     int n = in.readInt();
+    short size;
+    byte[] bytes;
     data = new ArrayList<BigInteger>(n);
-    for (int i = 0; i < n; i++)
-      data.add(i, new BigInteger(in.readLine()));
+    for (int i = 0; i < n; i++){
+      size = in.readShort();
+      bytes = new byte[size];
+      in.readFully(bytes, 0, size);
+      data.add(i, new BigInteger(bytes));
+    } 
     return;
   }
 
@@ -169,9 +175,9 @@ class NullRecordReader extends RecordReader<Edge,BigList> {
     if (!lineReader.nextKeyValue()) return false; 
     Text line = lineReader.getCurrentValue();
     String[] strs = line.toString().split(" ");
-    int[] vals = new int[4];
+    byte[] vals = new byte[4];
     for (int i = 0; i < 4; i++)
-      vals[i] = Integer.parseInt(strs[i]); 
+      vals[i] = (byte) Integer.parseInt(strs[i]); 
     key = new Edge(vals, vals); val = new BigList(1);
 
     return true;
@@ -198,7 +204,7 @@ public class Tiling {
   int depth = 5;
 
   /* Get double the coordinates of the face */
-  private static int[] face(int[] path1, int[] path2){
+  private static int[] face(byte[] path1, byte[] path2){
     int[] result = {0,0,0};
     for (int i = 0; i < path1.length -1; i++){
       if (path1[i] == path2[i]){
@@ -230,12 +236,15 @@ public class Tiling {
         System.out.format("Bootstrapping %n");
         System.out.format("[%d %d %d %d] %n", inEdge.src[0], inEdge.src[1], inEdge.src[2], inEdge.src[3]);
         int a,b,c,d,n;
-        a = inEdge.src[0]; b = inEdge.src[1]; c = inEdge.src[2];
-        d = inEdge.src[3]; n = a+b+c;
+        a = (int) inEdge.src[0]; 
+        b = (int) inEdge.src[1]; 
+        c = (int) inEdge.src[2];
+        d = (int) inEdge.src[3]; 
+        n = a+b+c;
 
-        int[] path0 = new int[n];
-        int[] path1 = new int[n];
-        int[] path2 = new int[n];
+        byte[] path0 = new byte[n];
+        byte[] path1 = new byte[n];
+        byte[] path2 = new byte[n];
         for (int i = 0; i < n; i++){
           if (i < a) path0[i] = path1[i] = path2[i] = 0;
           else if (i < a+b) path0[i] = path1[i] = path2[i] = 1;
@@ -257,15 +266,15 @@ public class Tiling {
         return;
       }
 
-      int tmp;
-      int[] path = inEdge.dst;
+      byte tmp;
+      byte[] path = inEdge.dst;
       int[] face_old = face(inEdge.src, inEdge.dst);
       int[] face_new = {0,0,0};
 
       /* loop over possible swaps */
       for (int i = 0; i < path.length-1; i++){
         if (path[i+1] > path[i]){ // if a swap...
-          int[] newPath = new int[path.length];
+          byte[] newPath = new byte[path.length];
           System.arraycopy(path, 0, newPath, 0, path.length);
           /* make the new path */
           tmp = newPath[i];
