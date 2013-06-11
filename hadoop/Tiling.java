@@ -107,6 +107,19 @@ class BigList implements Writable {
       data.add(i,list.data.get(i));
   }
 
+  public BigList(BigList list, boolean shift){
+    if (!shift){
+      data = new ArrayList<BigInteger>(list.data.size());
+      for (int i = 0; i < list.data.size(); i++)
+        data.add(i,list.data.get(i));
+    } else {
+      data = new ArrayList<BigInteger>(list.data.size());
+      data.add(0, BigInteger.valueOf(0));
+      for (int i = 0; i < list.data.size()-1; i++)
+        data.add(i+1,list.data.get(i));
+    }
+  }
+
   public BigList(){new BigList(1);}
 
   public void write(DataOutput out) throws IOException {
@@ -285,12 +298,13 @@ public class Tiling {
           face_new = face(path, newPath);
 
           /* Slide the descents list down if needed */
-          BigList newVals = new BigList(inVals);
+          BigList newVals = new BigList(inVals, compare(face_old, face_new));
+/*
           if (compare(face_old, face_new)){
             newVals.data.add(0, BigInteger.valueOf(0));
             newVals.data.remove(newVals.data.size()-1);
           }
-
+*/
           /* construct the new key */
           Edge newEdge = new Edge(path, newPath);
 
@@ -356,7 +370,7 @@ public class Tiling {
     job.setOutputKeyClass(Edge.class);
     job.setOutputValueClass(BigList.class);
 
-    //job.setNumReduceTasks(num_tasks * 2);
+    job.setNumReduceTasks((int)(num_tasks * 3.5));
     /* Setup paths, dependent on bootstrap */
     if (bootstrap) {
       job.setInputFormatClass(NullInputFormat.class);
