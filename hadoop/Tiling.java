@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.math.BigInteger;
+import java.lang.Math;
 import java.io.DataOutput;
 import java.io.DataInput;
+import java.util.Arrays;
 
 /* Hadoop includes */
 import org.apache.hadoop.conf.Configuration; 
@@ -15,6 +17,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job; 
 import org.apache.hadoop.mapreduce.Mapper; 
 import org.apache.hadoop.mapreduce.Reducer; 
+import org.apache.hadoop.mapreduce.Partitioner; 
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
@@ -87,6 +90,11 @@ class Edge implements WritableComparable {
       ans = ans + Integer.toString((int)dst[i]) + ",";
     ans = ans + ")}";
     return ans; 
+  }
+
+  @Override
+  public int hashCode(){
+    return Arrays.hashCode(dst);
   }
 
 }
@@ -330,6 +338,19 @@ public class Tiling {
       output.write(key, vals);
     } // end reduce
   } // end Reduce
+
+  public static class EdgePartitioner extends Partitioner<Edge,BigList>{
+    @Override 
+    public int getPartition(Edge key, BigList val, int numReduceTasks){
+      //if (numReduceTasks == 1) return 0;
+      int j = (int)(Math.log((double)numReduceTasks)/Math.log(2.)) + 1;
+      long hash = 0;
+      for (int i = 0; i < key.dst.length; i++)
+        hash += key.dst[i]*(1L<<((2*i))%j);
+      System.out.format("Hash: %d, N: %d %n",  (int) hash, numReduceTasks);
+      return (int) (hash % numReduceTasks);
+    }
+  }
  
   public static void main(String[] args) throws Exception {
     /* Parse args to see if this is a bootstrap run */
@@ -361,7 +382,8 @@ public class Tiling {
     /* Set the map, reduce, combine methods */
     job.setJarByClass(Tiling.class);
     job.setMapperClass(Map.class);
-    //job.setCombinerClass(Reduce.class);
+    job.setCombinerClass(Reduce.class);
+    job.setPartitionerClass(EdgePartitioner.class);
     job.setReducerClass(Reduce.class);
 
     /* Set key and value types */
@@ -370,7 +392,7 @@ public class Tiling {
     job.setOutputKeyClass(Edge.class);
     job.setOutputValueClass(BigList.class);
 
-    job.setNumReduceTasks((int)(num_tasks * 3.5));
+    job.setNumReduceTasks(num_tasks);
     /* Setup paths, dependent on bootstrap */
     if (bootstrap) {
       job.setInputFormatClass(NullInputFormat.class);
