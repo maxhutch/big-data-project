@@ -261,6 +261,7 @@ public class Tiling {
         b = (int) inEdge.src[1]; 
         c = (int) inEdge.src[2];
         d = (int) inEdge.src[3]; 
+        if (d < 0) d = 256 + d;
         n = a+b+c;
 
         byte[] path0 = new byte[n];
@@ -366,7 +367,6 @@ public class Tiling {
    if (otherArgs[0].equals("bootstrap")) {
       bootstrap = true;
       conf.set("mode", "bootstrap"); 
-      System.out.format("Bootstrapping %n");
     } else if (otherArgs[0].equals("continue")){
       cont = true;
       conf.set("mode", "continue");
