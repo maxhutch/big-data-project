@@ -1,0 +1,97 @@
+13/06/13 15:56:56 INFO input.FileInputFormat: Total input paths to process : 16
+13/06/13 15:56:56 INFO mapred.JobClient: Running job: job_201306131453_0052
+13/06/13 15:56:57 INFO mapred.JobClient:  map 0% reduce 0%
+13/06/13 15:57:09 INFO mapred.JobClient:  map 5% reduce 0%
+13/06/13 15:57:12 INFO mapred.JobClient:  map 9% reduce 0%
+13/06/13 15:57:15 INFO mapred.JobClient:  map 12% reduce 0%
+13/06/13 15:57:18 INFO mapred.JobClient:  map 15% reduce 0%
+13/06/13 15:57:21 INFO mapred.JobClient:  map 19% reduce 0%
+13/06/13 15:57:24 INFO mapred.JobClient:  map 22% reduce 0%
+13/06/13 15:57:25 INFO mapred.JobClient:  map 23% reduce 0%
+13/06/13 15:57:27 INFO mapred.JobClient:  map 26% reduce 0%
+13/06/13 15:57:30 INFO mapred.JobClient:  map 29% reduce 0%
+13/06/13 15:57:31 INFO mapred.JobClient:  map 30% reduce 0%
+13/06/13 15:57:33 INFO mapred.JobClient:  map 32% reduce 0%
+13/06/13 15:57:34 INFO mapred.JobClient:  map 34% reduce 0%
+13/06/13 15:57:36 INFO mapred.JobClient:  map 35% reduce 0%
+13/06/13 15:57:37 INFO mapred.JobClient:  map 38% reduce 0%
+13/06/13 15:57:39 INFO mapred.JobClient:  map 39% reduce 0%
+13/06/13 15:57:40 INFO mapred.JobClient:  map 41% reduce 0%
+13/06/13 15:57:42 INFO mapred.JobClient:  map 42% reduce 0%
+13/06/13 15:57:43 INFO mapred.JobClient:  map 45% reduce 0%
+13/06/13 15:57:45 INFO mapred.JobClient:  map 46% reduce 0%
+13/06/13 15:57:46 INFO mapred.JobClient:  map 48% reduce 0%
+13/06/13 15:57:48 INFO mapred.JobClient:  map 49% reduce 0%
+13/06/13 15:57:49 INFO mapred.JobClient:  map 52% reduce 0%
+13/06/13 15:57:51 INFO mapred.JobClient:  map 53% reduce 0%
+13/06/13 15:57:52 INFO mapred.JobClient:  map 56% reduce 0%
+13/06/13 15:57:55 INFO mapred.JobClient:  map 59% reduce 0%
+13/06/13 15:57:58 INFO mapred.JobClient:  map 60% reduce 0%
+13/06/13 15:58:01 INFO mapred.JobClient:  map 61% reduce 0%
+13/06/13 15:58:14 INFO mapred.JobClient:  map 62% reduce 0%
+13/06/13 15:58:20 INFO mapred.JobClient:  map 64% reduce 2%
+13/06/13 15:58:21 INFO mapred.JobClient:  map 66% reduce 8%
+13/06/13 15:58:22 INFO mapred.JobClient:  map 66% reduce 9%
+13/06/13 15:58:23 INFO mapred.JobClient:  map 73% reduce 11%
+13/06/13 15:58:24 INFO mapred.JobClient:  map 84% reduce 16%
+13/06/13 15:58:25 INFO mapred.JobClient:  map 84% reduce 18%
+13/06/13 15:58:26 INFO mapred.JobClient:  map 87% reduce 18%
+13/06/13 15:58:27 INFO mapred.JobClient:  map 92% reduce 19%
+13/06/13 15:58:29 INFO mapred.JobClient:  map 95% reduce 19%
+13/06/13 15:58:30 INFO mapred.JobClient:  map 95% reduce 20%
+13/06/13 15:58:32 INFO mapred.JobClient:  map 96% reduce 20%
+13/06/13 15:58:33 INFO mapred.JobClient:  map 96% reduce 21%
+13/06/13 15:58:35 INFO mapred.JobClient:  map 96% reduce 22%
+13/06/13 15:58:36 INFO mapred.JobClient:  map 96% reduce 23%
+13/06/13 15:58:39 INFO mapred.JobClient:  map 96% reduce 28%
+13/06/13 15:58:41 INFO mapred.JobClient:  map 97% reduce 29%
+13/06/13 15:58:42 INFO mapred.JobClient:  map 97% reduce 30%
+13/06/13 15:59:00 INFO mapred.JobClient:  map 98% reduce 30%
+13/06/13 15:59:18 INFO mapred.JobClient:  map 99% reduce 30%
+13/06/13 16:00:29 INFO mapred.JobClient:  map 100% reduce 30%
+13/06/13 16:00:33 INFO mapred.JobClient:  map 100% reduce 42%
+13/06/13 16:00:35 INFO mapred.JobClient:  map 100% reduce 43%
+13/06/13 16:00:36 INFO mapred.JobClient:  map 100% reduce 62%
+13/06/13 16:00:37 INFO mapred.JobClient:  map 100% reduce 70%
+13/06/13 16:00:38 INFO mapred.JobClient:  map 100% reduce 71%
+13/06/13 16:00:39 INFO mapred.JobClient:  map 100% reduce 90%
+13/06/13 16:00:40 INFO mapred.JobClient:  map 100% reduce 98%
+13/06/13 16:00:42 INFO mapred.JobClient:  map 100% reduce 99%
+13/06/13 16:00:44 INFO mapred.JobClient:  map 100% reduce 100%
+13/06/13 16:00:45 INFO mapred.JobClient: Job complete: job_201306131453_0052
+13/06/13 16:00:45 INFO mapred.JobClient: Counters: 30
+13/06/13 16:00:45 INFO mapred.JobClient:   Job Counters 
+13/06/13 16:00:45 INFO mapred.JobClient:     Launched reduce tasks=16
+13/06/13 16:00:45 INFO mapred.JobClient:     SLOTS_MILLIS_MAPS=1580107
+13/06/13 16:00:45 INFO mapred.JobClient:     Total time spent by all reduces waiting after reserving slots (ms)=0
+13/06/13 16:00:45 INFO mapred.JobClient:     Total time spent by all maps waiting after reserving slots (ms)=0
+13/06/13 16:00:45 INFO mapred.JobClient:     Rack-local map tasks=3
+13/06/13 16:00:45 INFO mapred.JobClient:     Launched map tasks=24
+13/06/13 16:00:45 INFO mapred.JobClient:     Data-local map tasks=21
+13/06/13 16:00:45 INFO mapred.JobClient:     SLOTS_MILLIS_REDUCES=2333272
+13/06/13 16:00:45 INFO mapred.JobClient:   File Output Format Counters 
+13/06/13 16:00:45 INFO mapred.JobClient:     Bytes Written=2472628867
+13/06/13 16:00:45 INFO mapred.JobClient:   FileSystemCounters
+13/06/13 16:00:45 INFO mapred.JobClient:     FILE_BYTES_READ=2127527603
+13/06/13 16:00:45 INFO mapred.JobClient:     HDFS_BYTES_READ=2367279328
+13/06/13 16:00:45 INFO mapred.JobClient:     FILE_BYTES_WRITTEN=4292052137
+13/06/13 16:00:45 INFO mapred.JobClient:     HDFS_BYTES_WRITTEN=2472628867
+13/06/13 16:00:45 INFO mapred.JobClient:   File Input Format Counters 
+13/06/13 16:00:45 INFO mapred.JobClient:     Bytes Read=2367270467
+13/06/13 16:00:45 INFO mapred.JobClient:   Map-Reduce Framework
+13/06/13 16:00:45 INFO mapred.JobClient:     Map output materialized bytes=2437768845
+13/06/13 16:00:45 INFO mapred.JobClient:     Map input records=3214199
+13/06/13 16:00:45 INFO mapred.JobClient:     Reduce shuffle bytes=2437768845
+13/06/13 16:00:45 INFO mapred.JobClient:     Spilled Records=5763825
+13/06/13 16:00:45 INFO mapred.JobClient:     Map output bytes=14542284053
+13/06/13 16:00:45 INFO mapred.JobClient:     Total committed heap usage (bytes)=60354199552
+13/06/13 16:00:45 INFO mapred.JobClient:     CPU time spent (ms)=1946740
+13/06/13 16:00:45 INFO mapred.JobClient:     Combine input records=20125802
+13/06/13 16:00:45 INFO mapred.JobClient:     SPLIT_RAW_BYTES=2880
+13/06/13 16:00:45 INFO mapred.JobClient:     Reduce input records=3276510
+13/06/13 16:00:45 INFO mapred.JobClient:     Reduce input groups=3276395
+13/06/13 16:00:45 INFO mapred.JobClient:     Combine output records=3276510
+13/06/13 16:00:45 INFO mapred.JobClient:     Physical memory (bytes) snapshot=54613835776
+13/06/13 16:00:45 INFO mapred.JobClient:     Reduce output records=3276395
+13/06/13 16:00:45 INFO mapred.JobClient:     Virtual memory (bytes) snapshot=109692321792
+13/06/13 16:00:45 INFO mapred.JobClient:     Map output records=20125802

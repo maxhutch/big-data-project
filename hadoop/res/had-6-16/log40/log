@@ -1,0 +1,58 @@
+13/06/13 14:40:41 INFO input.FileInputFormat: Total input paths to process : 32
+13/06/13 14:40:42 INFO mapred.JobClient: Running job: job_201306131424_0042
+13/06/13 14:40:43 INFO mapred.JobClient:  map 0% reduce 0%
+13/06/13 14:40:52 INFO mapred.JobClient:  map 38% reduce 0%
+13/06/13 14:40:55 INFO mapred.JobClient:  map 57% reduce 0%
+13/06/13 14:40:58 INFO mapred.JobClient:  map 70% reduce 0%
+13/06/13 14:41:01 INFO mapred.JobClient:  map 81% reduce 0%
+13/06/13 14:41:03 INFO mapred.JobClient:  map 81% reduce 8%
+13/06/13 14:41:04 INFO mapred.JobClient:  map 89% reduce 8%
+13/06/13 14:41:07 INFO mapred.JobClient:  map 94% reduce 8%
+13/06/13 14:41:10 INFO mapred.JobClient:  map 97% reduce 8%
+13/06/13 14:41:12 INFO mapred.JobClient:  map 97% reduce 14%
+13/06/13 14:41:13 INFO mapred.JobClient:  map 99% reduce 14%
+13/06/13 14:41:18 INFO mapred.JobClient:  map 99% reduce 24%
+13/06/13 14:41:27 INFO mapred.JobClient:  map 99% reduce 27%
+13/06/13 14:41:28 INFO mapred.JobClient:  map 99% reduce 28%
+13/06/13 14:41:29 INFO mapred.JobClient:  map 100% reduce 28%
+13/06/13 14:41:33 INFO mapred.JobClient:  map 100% reduce 32%
+13/06/13 14:41:34 INFO mapred.JobClient:  map 100% reduce 33%
+13/06/13 14:41:35 INFO mapred.JobClient:  map 100% reduce 56%
+13/06/13 14:41:36 INFO mapred.JobClient:  map 100% reduce 91%
+13/06/13 14:41:37 INFO mapred.JobClient:  map 100% reduce 99%
+13/06/13 14:41:38 INFO mapred.JobClient:  map 100% reduce 100%
+13/06/13 14:41:38 INFO mapred.JobClient: Job complete: job_201306131424_0042
+13/06/13 14:41:38 INFO mapred.JobClient: Counters: 28
+13/06/13 14:41:38 INFO mapred.JobClient:   Job Counters 
+13/06/13 14:41:38 INFO mapred.JobClient:     Launched reduce tasks=32
+13/06/13 14:41:38 INFO mapred.JobClient:     SLOTS_MILLIS_MAPS=790577
+13/06/13 14:41:38 INFO mapred.JobClient:     Total time spent by all reduces waiting after reserving slots (ms)=0
+13/06/13 14:41:38 INFO mapred.JobClient:     Total time spent by all maps waiting after reserving slots (ms)=0
+13/06/13 14:41:38 INFO mapred.JobClient:     Launched map tasks=32
+13/06/13 14:41:38 INFO mapred.JobClient:     Data-local map tasks=32
+13/06/13 14:41:38 INFO mapred.JobClient:     SLOTS_MILLIS_REDUCES=1278397
+13/06/13 14:41:38 INFO mapred.JobClient:   File Output Format Counters 
+13/06/13 14:41:38 INFO mapred.JobClient:     Bytes Written=1198457821
+13/06/13 14:41:38 INFO mapred.JobClient:   FileSystemCounters
+13/06/13 14:41:38 INFO mapred.JobClient:     HDFS_BYTES_READ=1075753937
+13/06/13 14:41:38 INFO mapred.JobClient:     FILE_BYTES_WRITTEN=1184310257
+13/06/13 14:41:38 INFO mapred.JobClient:     HDFS_BYTES_WRITTEN=1198457821
+13/06/13 14:41:38 INFO mapred.JobClient:   File Input Format Counters 
+13/06/13 14:41:38 INFO mapred.JobClient:     Bytes Read=1075750097
+13/06/13 14:41:38 INFO mapred.JobClient:   Map-Reduce Framework
+13/06/13 14:41:38 INFO mapred.JobClient:     Map output materialized bytes=1180302437
+13/06/13 14:41:38 INFO mapred.JobClient:     Map input records=1852983
+13/06/13 14:41:38 INFO mapred.JobClient:     Reduce shuffle bytes=1180302437
+13/06/13 14:41:38 INFO mapred.JobClient:     Spilled Records=2017850
+13/06/13 14:41:38 INFO mapred.JobClient:     Map output bytes=6637672895
+13/06/13 14:41:38 INFO mapred.JobClient:     Total committed heap usage (bytes)=89618710528
+13/06/13 14:41:38 INFO mapred.JobClient:     CPU time spent (ms)=1016550
+13/06/13 14:41:38 INFO mapred.JobClient:     Combine input records=11683922
+13/06/13 14:41:38 INFO mapred.JobClient:     SPLIT_RAW_BYTES=3840
+13/06/13 14:41:38 INFO mapred.JobClient:     Reduce input records=2017850
+13/06/13 14:41:38 INFO mapred.JobClient:     Reduce input groups=2017850
+13/06/13 14:41:38 INFO mapred.JobClient:     Combine output records=2017850
+13/06/13 14:41:38 INFO mapred.JobClient:     Physical memory (bytes) snapshot=74978889728
+13/06/13 14:41:38 INFO mapred.JobClient:     Reduce output records=2017850
+13/06/13 14:41:38 INFO mapred.JobClient:     Virtual memory (bytes) snapshot=175623946240
+13/06/13 14:41:38 INFO mapred.JobClient:     Map output records=11683922
