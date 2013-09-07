@@ -4,10 +4,7 @@ CLSPTH = hadoop-core-1.1.2.jar:commons-cli-1.2.jar
 Tiling: Tiling.java
 	$(JAVAC) -classpath $(CLSPTH) Tiling.java
 	jar cvf Tiling.jar *.class
-
-WordCount: WordCount.java
-	$(JAVAC) -classpath $(CLSPTH) WordCount.java
-	jar cvf WordCount.jar Word*.class
+	rm *.class
 
 run: 
 	rm -rf tmp*
