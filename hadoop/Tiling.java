@@ -337,7 +337,7 @@ public class Tiling {
     /* Set the map, reduce, combine methods */
     job.setJarByClass(Tiling.class);
     job.setMapperClass(Map.class);
-    //job.setCombinerClass(Reduce.class);
+    job.setCombinerClass(Reduce.class);
     job.setReducerClass(Reduce.class);
 
     /* Set key and value types */
