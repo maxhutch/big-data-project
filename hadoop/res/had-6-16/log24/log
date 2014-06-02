@@ -1,0 +1,48 @@
+13/06/13 14:31:48 INFO input.FileInputFormat: Total input paths to process : 32
+13/06/13 14:31:48 INFO mapred.JobClient: Running job: job_201306131424_0026
+13/06/13 14:31:49 INFO mapred.JobClient:  map 0% reduce 0%
+13/06/13 14:31:53 INFO mapred.JobClient:  map 12% reduce 0%
+13/06/13 14:31:54 INFO mapred.JobClient:  map 37% reduce 0%
+13/06/13 14:31:55 INFO mapred.JobClient:  map 59% reduce 0%
+13/06/13 14:31:56 INFO mapred.JobClient:  map 84% reduce 0%
+13/06/13 14:31:57 INFO mapred.JobClient:  map 93% reduce 0%
+13/06/13 14:31:58 INFO mapred.JobClient:  map 100% reduce 0%
+13/06/13 14:32:00 INFO mapred.JobClient:  map 100% reduce 7%
+13/06/13 14:32:01 INFO mapred.JobClient:  map 100% reduce 33%
+13/06/13 14:32:02 INFO mapred.JobClient:  map 100% reduce 64%
+13/06/13 14:32:03 INFO mapred.JobClient:  map 100% reduce 100%
+13/06/13 14:32:03 INFO mapred.JobClient: Job complete: job_201306131424_0026
+13/06/13 14:32:03 INFO mapred.JobClient: Counters: 28
+13/06/13 14:32:03 INFO mapred.JobClient:   Job Counters 
+13/06/13 14:32:03 INFO mapred.JobClient:     Launched reduce tasks=32
+13/06/13 14:32:03 INFO mapred.JobClient:     SLOTS_MILLIS_MAPS=128952
+13/06/13 14:32:03 INFO mapred.JobClient:     Total time spent by all reduces waiting after reserving slots (ms)=0
+13/06/13 14:32:03 INFO mapred.JobClient:     Total time spent by all maps waiting after reserving slots (ms)=0
+13/06/13 14:32:03 INFO mapred.JobClient:     Launched map tasks=32
+13/06/13 14:32:03 INFO mapred.JobClient:     Data-local map tasks=32
+13/06/13 14:32:03 INFO mapred.JobClient:     SLOTS_MILLIS_REDUCES=281372
+13/06/13 14:32:03 INFO mapred.JobClient:   File Output Format Counters 
+13/06/13 14:32:03 INFO mapred.JobClient:     Bytes Written=90095323
+13/06/13 14:32:03 INFO mapred.JobClient:   FileSystemCounters
+13/06/13 14:32:03 INFO mapred.JobClient:     HDFS_BYTES_READ=71557194
+13/06/13 14:32:03 INFO mapred.JobClient:     FILE_BYTES_WRITTEN=92453555
+13/06/13 14:32:03 INFO mapred.JobClient:     HDFS_BYTES_WRITTEN=90095323
+13/06/13 14:32:03 INFO mapred.JobClient:   File Input Format Counters 
+13/06/13 14:32:03 INFO mapred.JobClient:     Bytes Read=71553354
+13/06/13 14:32:03 INFO mapred.JobClient:   Map-Reduce Framework
+13/06/13 14:32:03 INFO mapred.JobClient:     Map output materialized bytes=88445735
+13/06/13 14:32:03 INFO mapred.JobClient:     Map input records=166672
+13/06/13 14:32:03 INFO mapred.JobClient:     Reduce shuffle bytes=88445735
+13/06/13 14:32:03 INFO mapred.JobClient:     Spilled Records=206861
+13/06/13 14:32:03 INFO mapred.JobClient:     Map output bytes=414128051
+13/06/13 14:32:03 INFO mapred.JobClient:     Total committed heap usage (bytes)=72409415680
+13/06/13 14:32:03 INFO mapred.JobClient:     CPU time spent (ms)=209720
+13/06/13 14:32:03 INFO mapred.JobClient:     Combine input records=991566
+13/06/13 14:32:03 INFO mapred.JobClient:     SPLIT_RAW_BYTES=3840
+13/06/13 14:32:03 INFO mapred.JobClient:     Reduce input records=206861
+13/06/13 14:32:03 INFO mapred.JobClient:     Reduce input groups=206861
+13/06/13 14:32:03 INFO mapred.JobClient:     Combine output records=206861
+13/06/13 14:32:03 INFO mapred.JobClient:     Physical memory (bytes) snapshot=52962357248
+13/06/13 14:32:03 INFO mapred.JobClient:     Reduce output records=206861
+13/06/13 14:32:03 INFO mapred.JobClient:     Virtual memory (bytes) snapshot=175509094400
+13/06/13 14:32:03 INFO mapred.JobClient:     Map output records=991566

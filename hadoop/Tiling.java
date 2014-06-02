@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.math.BigInteger;
+import java.lang.Math;
 import java.io.DataOutput;
 import java.io.DataInput;
+import java.util.Arrays;
 
 /* Hadoop includes */
 import org.apache.hadoop.conf.Configuration; 
@@ -15,6 +17,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job; 
 import org.apache.hadoop.mapreduce.Mapper; 
 import org.apache.hadoop.mapreduce.Reducer; 
+import org.apache.hadoop.mapreduce.Partitioner; 
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
@@ -34,13 +37,13 @@ import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.RecordReader;
 
 class Edge implements WritableComparable {
-  int[] src;
-  int[] dst;
+  byte[] src;
+  byte[] dst;
   int n;
 
   public Edge(){};
 
-  public Edge(int[] src, int[] dst){
+  public Edge(byte[] src, byte[] dst){
     this.n = src.length;
     this.src = src;
     this.dst = dst;
@@ -65,32 +68,33 @@ class Edge implements WritableComparable {
 
   public void write(DataOutput out) throws IOException {
     out.writeInt(n);
-    for (int i = 0; i < n; i++)
-      out.writeInt(src[i]);
-    for (int i = 0; i < n; i++)
-      out.writeInt(dst[i]);
+    out.write(src);
+    out.write(dst);
     return;
   }
 
   public void readFields(DataInput in) throws IOException {
     n = in.readInt();
-    src = new int[n]; dst = new int[n];
-    for (int i = 0; i < n; i++)
-      src[i] = in.readInt();
-    for (int i = 0; i < n; i++)
-      dst[i] = in.readInt();
+    src = new byte[n]; dst = new byte[n];
+    in.readFully(src, 0, n);
+    in.readFully(dst, 0, n);
     return;
   }
 
   public String toString(){
     String ans = "{(";
     for (int i = 0; i < n; i++)
-      ans = ans + Integer.toString(src[i]) + ",";
+      ans = ans + Integer.toString((int)src[i]) + ",";
     ans = ans + ") -> (";
     for (int i = 0; i < n; i++)
-      ans = ans + Integer.toString(dst[i]) + ",";
+      ans = ans + Integer.toString((int)dst[i]) + ",";
     ans = ans + ")}";
     return ans; 
+  }
+
+  @Override
+  public int hashCode(){
+    return Arrays.hashCode(dst);
   }
 
 }
@@ -111,20 +115,43 @@ class BigList implements Writable {
       data.add(i,list.data.get(i));
   }
 
+  public BigList(BigList list, boolean shift){
+    if (!shift){
+      data = new ArrayList<BigInteger>(list.data.size());
+      for (int i = 0; i < list.data.size(); i++)
+        data.add(i,list.data.get(i));
+    } else {
+      data = new ArrayList<BigInteger>(list.data.size());
+      data.add(0, BigInteger.valueOf(0));
+      for (int i = 0; i < list.data.size()-1; i++)
+        data.add(i+1,list.data.get(i));
+    }
+  }
+
   public BigList(){new BigList(1);}
 
   public void write(DataOutput out) throws IOException {
+    byte[] bytes;
     out.writeInt(data.size());
-    for (int i = 0; i < data.size(); i++)
-      out.writeBytes(data.get(i).toString()+"\n");
+    for (int i = 0; i < data.size(); i++){
+      bytes = data.get(i).toByteArray();
+      out.writeShort((short) bytes.length);
+      out.write(bytes);
+    }
     return;
   }
 
   public void readFields(DataInput in) throws IOException {
     int n = in.readInt();
+    short size;
+    byte[] bytes;
     data = new ArrayList<BigInteger>(n);
-    for (int i = 0; i < n; i++)
-      data.add(i, new BigInteger(in.readLine()));
+    for (int i = 0; i < n; i++){
+      size = in.readShort();
+      bytes = new byte[size];
+      in.readFully(bytes, 0, size);
+      data.add(i, new BigInteger(bytes));
+    } 
     return;
   }
 
@@ -169,9 +196,9 @@ class NullRecordReader extends RecordReader<Edge,BigList> {
     if (!lineReader.nextKeyValue()) return false; 
     Text line = lineReader.getCurrentValue();
     String[] strs = line.toString().split(" ");
-    int[] vals = new int[4];
+    byte[] vals = new byte[4];
     for (int i = 0; i < 4; i++)
-      vals[i] = Integer.parseInt(strs[i]); 
+      vals[i] = (byte) Integer.parseInt(strs[i]); 
     key = new Edge(vals, vals); val = new BigList(1);
 
     return true;
@@ -198,7 +225,7 @@ public class Tiling {
   int depth = 5;
 
   /* Get double the coordinates of the face */
-  private static int[] face(int[] path1, int[] path2){
+  private static int[] face(byte[] path1, byte[] path2){
     int[] result = {0,0,0};
     for (int i = 0; i < path1.length -1; i++){
       if (path1[i] == path2[i]){
@@ -230,12 +257,16 @@ public class Tiling {
         System.out.format("Bootstrapping %n");
         System.out.format("[%d %d %d %d] %n", inEdge.src[0], inEdge.src[1], inEdge.src[2], inEdge.src[3]);
         int a,b,c,d,n;
-        a = inEdge.src[0]; b = inEdge.src[1]; c = inEdge.src[2];
-        d = inEdge.src[3]; n = a+b+c;
+        a = (int) inEdge.src[0]; 
+        b = (int) inEdge.src[1]; 
+        c = (int) inEdge.src[2];
+        d = (int) inEdge.src[3]; 
+        if (d < 0) d = 256 + d;
+        n = a+b+c;
 
-        int[] path0 = new int[n];
-        int[] path1 = new int[n];
-        int[] path2 = new int[n];
+        byte[] path0 = new byte[n];
+        byte[] path1 = new byte[n];
+        byte[] path2 = new byte[n];
         for (int i = 0; i < n; i++){
           if (i < a) path0[i] = path1[i] = path2[i] = 0;
           else if (i < a+b) path0[i] = path1[i] = path2[i] = 1;
@@ -257,15 +288,15 @@ public class Tiling {
         return;
       }
 
-      int tmp;
-      int[] path = inEdge.dst;
+      byte tmp;
+      byte[] path = inEdge.dst;
       int[] face_old = face(inEdge.src, inEdge.dst);
       int[] face_new = {0,0,0};
 
       /* loop over possible swaps */
       for (int i = 0; i < path.length-1; i++){
         if (path[i+1] > path[i]){ // if a swap...
-          int[] newPath = new int[path.length];
+          byte[] newPath = new byte[path.length];
           System.arraycopy(path, 0, newPath, 0, path.length);
           /* make the new path */
           tmp = newPath[i];
@@ -276,12 +307,13 @@ public class Tiling {
           face_new = face(path, newPath);
 
           /* Slide the descents list down if needed */
-          BigList newVals = new BigList(inVals);
+          BigList newVals = new BigList(inVals, compare(face_old, face_new));
+/*
           if (compare(face_old, face_new)){
             newVals.data.add(0, BigInteger.valueOf(0));
             newVals.data.remove(newVals.data.size()-1);
           }
-
+*/
           /* construct the new key */
           Edge newEdge = new Edge(path, newPath);
 
@@ -307,6 +339,19 @@ public class Tiling {
       output.write(key, vals);
     } // end reduce
   } // end Reduce
+
+  public static class EdgePartitioner extends Partitioner<Edge,BigList>{
+    @Override 
+    public int getPartition(Edge key, BigList val, int numReduceTasks){
+      //if (numReduceTasks == 1) return 0;
+      int j = (int)(Math.log((double)numReduceTasks)/Math.log(2.)) + 1;
+      long hash = 0;
+      for (int i = 0; i < key.dst.length; i++)
+        hash += key.dst[i]*(1L<<((2*i))%j);
+      System.out.format("Hash: %d, N: %d %n",  (int) hash, numReduceTasks);
+      return (int) (hash % numReduceTasks);
+    }
+  }
  
   public static void main(String[] args) throws Exception {
     /* Parse args to see if this is a bootstrap run */
@@ -315,14 +360,13 @@ public class Tiling {
     boolean bootstrap = false;
     boolean cont = false;
     boolean out = false; 
-    if (otherArgs.length != 3) {
+    if (otherArgs.length != 4) {
       System.err.println("Usage: tiling <mode> <indir> <outdir>");
       System.exit(2);
     }
    if (otherArgs[0].equals("bootstrap")) {
       bootstrap = true;
       conf.set("mode", "bootstrap"); 
-      System.out.format("Bootstrapping %n");
     } else if (otherArgs[0].equals("continue")){
       cont = true;
       conf.set("mode", "continue");
@@ -330,6 +374,7 @@ public class Tiling {
       out = true;
       conf.set("mode", "output");
     }
+    int num_tasks = Integer.parseInt(otherArgs[3]);
 
     /* setup conf and job */
     Job job = new Job(conf, "tiling");
@@ -338,6 +383,7 @@ public class Tiling {
     job.setJarByClass(Tiling.class);
     job.setMapperClass(Map.class);
     job.setCombinerClass(Reduce.class);
+    job.setPartitionerClass(EdgePartitioner.class);
     job.setReducerClass(Reduce.class);
 
     /* Set key and value types */
@@ -346,6 +392,7 @@ public class Tiling {
     job.setOutputKeyClass(Edge.class);
     job.setOutputValueClass(BigList.class);
 
+    job.setNumReduceTasks(num_tasks);
     /* Setup paths, dependent on bootstrap */
     if (bootstrap) {
       job.setInputFormatClass(NullInputFormat.class);
@@ -356,6 +403,7 @@ public class Tiling {
     } else if (out){
       job.setInputFormatClass(SequenceFileInputFormat.class);
       job.setOutputFormatClass(TextOutputFormat.class);
+      job.setNumReduceTasks(1);
     }
     FileInputFormat.addInputPath(job, new Path(otherArgs[1]));
     FileOutputFormat.setOutputPath(job, new Path(otherArgs[2]));

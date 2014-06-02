@@ -6,10 +6,6 @@ Tiling: Tiling.java
 	jar cvf Tiling.jar *.class
 	rm *.class
 
-WordCount: WordCount.java
-	$(JAVAC) -classpath $(CLSPTH) WordCount.java
-	jar cvf WordCount.jar Word*.class
-
 run: 
 	rm -rf tmp*
 	~/src/hadoop-1.1.2/bin/hadoop jar Tiling.jar Tiling bootstrap test tmp0

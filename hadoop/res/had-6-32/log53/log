@@ -1,0 +1,58 @@
+13/06/14 11:32:07 INFO input.FileInputFormat: Total input paths to process : 64
+13/06/14 11:32:07 INFO mapred.JobClient: Running job: job_201306141059_0055
+13/06/14 11:32:08 INFO mapred.JobClient:  map 0% reduce 0%
+13/06/14 11:32:17 INFO mapred.JobClient:  map 30% reduce 0%
+13/06/14 11:32:20 INFO mapred.JobClient:  map 49% reduce 0%
+13/06/14 11:32:23 INFO mapred.JobClient:  map 69% reduce 0%
+13/06/14 11:32:26 INFO mapred.JobClient:  map 87% reduce 0%
+13/06/14 11:32:29 INFO mapred.JobClient:  map 93% reduce 0%
+13/06/14 11:32:36 INFO mapred.JobClient:  map 94% reduce 0%
+13/06/14 11:32:37 INFO mapred.JobClient:  map 96% reduce 10%
+13/06/14 11:32:38 INFO mapred.JobClient:  map 96% reduce 26%
+13/06/14 11:32:40 INFO mapred.JobClient:  map 97% reduce 26%
+13/06/14 11:32:41 INFO mapred.JobClient:  map 97% reduce 27%
+13/06/14 11:32:43 INFO mapred.JobClient:  map 99% reduce 27%
+13/06/14 11:32:46 INFO mapred.JobClient:  map 100% reduce 27%
+13/06/14 11:32:47 INFO mapred.JobClient:  map 100% reduce 29%
+13/06/14 11:32:53 INFO mapred.JobClient:  map 100% reduce 31%
+13/06/14 11:32:55 INFO mapred.JobClient:  map 100% reduce 53%
+13/06/14 11:32:56 INFO mapred.JobClient:  map 100% reduce 88%
+13/06/14 11:32:57 INFO mapred.JobClient:  map 100% reduce 93%
+13/06/14 11:33:02 INFO mapred.JobClient:  map 100% reduce 95%
+13/06/14 11:33:05 INFO mapred.JobClient:  map 100% reduce 100%
+13/06/14 11:33:05 INFO mapred.JobClient: Job complete: job_201306141059_0055
+13/06/14 11:33:05 INFO mapred.JobClient: Counters: 29
+13/06/14 11:33:05 INFO mapred.JobClient:   Job Counters 
+13/06/14 11:33:05 INFO mapred.JobClient:     Launched reduce tasks=64
+13/06/14 11:33:05 INFO mapred.JobClient:     SLOTS_MILLIS_MAPS=1451105
+13/06/14 11:33:05 INFO mapred.JobClient:     Total time spent by all reduces waiting after reserving slots (ms)=0
+13/06/14 11:33:05 INFO mapred.JobClient:     Total time spent by all maps waiting after reserving slots (ms)=0
+13/06/14 11:33:05 INFO mapred.JobClient:     Rack-local map tasks=15
+13/06/14 11:33:05 INFO mapred.JobClient:     Launched map tasks=64
+13/06/14 11:33:05 INFO mapred.JobClient:     Data-local map tasks=49
+13/06/14 11:33:05 INFO mapred.JobClient:     SLOTS_MILLIS_REDUCES=1549280
+13/06/14 11:33:05 INFO mapred.JobClient:   File Output Format Counters 
+13/06/14 11:33:05 INFO mapred.JobClient:     Bytes Written=2710639461
+13/06/14 11:33:05 INFO mapred.JobClient:   FileSystemCounters
+13/06/14 11:33:05 INFO mapred.JobClient:     HDFS_BYTES_READ=2645018906
+13/06/14 11:33:05 INFO mapred.JobClient:     FILE_BYTES_WRITTEN=2683103357
+13/06/14 11:33:05 INFO mapred.JobClient:     HDFS_BYTES_WRITTEN=2710639461
+13/06/14 11:33:05 INFO mapred.JobClient:   File Input Format Counters 
+13/06/14 11:33:05 INFO mapred.JobClient:     Bytes Read=2645011226
+13/06/14 11:33:05 INFO mapred.JobClient:   Map-Reduce Framework
+13/06/14 11:33:05 INFO mapred.JobClient:     Map output materialized bytes=2675038545
+13/06/14 11:33:05 INFO mapred.JobClient:     Map input records=3339734
+13/06/14 11:33:05 INFO mapred.JobClient:     Reduce shuffle bytes=2675038545
+13/06/14 11:33:05 INFO mapred.JobClient:     Spilled Records=3339734
+13/06/14 11:33:05 INFO mapred.JobClient:     Map output bytes=16140337461
+13/06/14 11:33:05 INFO mapred.JobClient:     Total committed heap usage (bytes)=175884402688
+13/06/14 11:33:05 INFO mapred.JobClient:     CPU time spent (ms)=1900830
+13/06/14 11:33:05 INFO mapred.JobClient:     Combine input records=20742720
+13/06/14 11:33:05 INFO mapred.JobClient:     SPLIT_RAW_BYTES=7680
+13/06/14 11:33:05 INFO mapred.JobClient:     Reduce input records=3339734
+13/06/14 11:33:05 INFO mapred.JobClient:     Reduce input groups=3339734
+13/06/14 11:33:05 INFO mapred.JobClient:     Combine output records=3339734
+13/06/14 11:33:05 INFO mapred.JobClient:     Physical memory (bytes) snapshot=150686355456
+13/06/14 11:33:05 INFO mapred.JobClient:     Reduce output records=3339734
+13/06/14 11:33:05 INFO mapred.JobClient:     Virtual memory (bytes) snapshot=351522955264
+13/06/14 11:33:05 INFO mapred.JobClient:     Map output records=20742720
